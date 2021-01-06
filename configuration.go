@@ -11,6 +11,12 @@ type Configuration struct {
 	IIRFiltering FilteringCoefficient
 }
 
+// Bytes returns a byte array containing the configuration register and config data serialized for I2C
+func (me Configuration) Bytes() []byte {
+
+	return []byte{uint8(regConfig), me.UInt8()}
+}
+
 // UInt8 returns the unsigned byte value for this configuration's properties
 func (me Configuration) UInt8() uint8 {
 

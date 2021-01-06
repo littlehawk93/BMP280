@@ -12,6 +12,12 @@ type MeasurementControl struct {
 	Mode                    PowerMode
 }
 
+// Bytes returns a byte array containing the Measurement Control register and control data serialized for I2C
+func (me MeasurementControl) Bytes() []byte {
+
+	return []byte{uint8(regMesasureCtrl), me.UInt8()}
+}
+
 // UInt8 returns the unsigned byte value for this measurement mode's properties
 func (me MeasurementControl) UInt8() uint8 {
 
