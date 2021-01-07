@@ -14,3 +14,7 @@ const (
 	regTempLSB      register = 0xFB
 	regTempXLSB     register = 0xFC
 )
+
+var regsPressure = []byte{uint8(regPressMSB), uint8(regPressLSB), uint8(regPressXLSB)}
+
+var regsTemperature = []byte{uint8(regTempMSB), uint8(regTempLSB), uint8(regTempXLSB)}

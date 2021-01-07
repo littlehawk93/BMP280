@@ -4,9 +4,18 @@ package bmp280
 type FilteringCoefficient uint8
 
 const (
-	filteringOff FilteringCoefficient = 0x00
-	filtering2   FilteringCoefficient = 0x02
-	filtering4   FilteringCoefficient = 0x03
-	filtering8   FilteringCoefficient = 0x04
-	filtering16  FilteringCoefficient = 0x05
+	// FilteringOff no filtering. Each value is the last raw value read from the sensor
+	FilteringOff FilteringCoefficient = 0x00
+
+	// Filtering2 Slight filtering. Takes about 2 samples to start seeing significant changes in sensor values
+	Filtering2 FilteringCoefficient = 0x02
+
+	// Filtering4 Some filtering. Takes about 5 samples to start seeing significant changes in sensor values
+	Filtering4 FilteringCoefficient = 0x03
+
+	// Filtering8 High filtering. Takes about 11 samples to start seeing significant changes in sensor values
+	Filtering8 FilteringCoefficient = 0x04
+
+	// Filtering16 Very high filtering. Takes about 22 samples to start seeing significant changes in sensor values
+	Filtering16 FilteringCoefficient = 0x05
 )
