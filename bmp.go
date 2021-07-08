@@ -61,13 +61,16 @@ func (me *BMP) Reset() error {
 // ReadTemperature read the latest temperature reading from the BMP280. Returns the temperature in Celsius or any i2c errors that occurred
 func (me *BMP) ReadTemperature() (float32, error) {
 
+	return 0.0, nil
 }
 
 // ReadPressure read the latest pressure reading from the BMP280. Returns the pressure in Pascals or any i2c errors that occurred
 func (me *BMP) ReadPressure() (float32, error) {
 
+	return 0.0, nil
 }
 
 func readRaw(registers []byte, numBits int) (uint, error) {
 
+	return 0, nil
 }
