@@ -61,7 +61,17 @@ func (me *BMP) Reset() error {
 // ReadTemperature read the latest temperature reading from the BMP280. Returns the temperature in Celsius or any i2c errors that occurred
 func (me *BMP) ReadTemperature() (float32, error) {
 
-	return 0.0, nil
+	intVal, err := me.readRawSensorValue(me.config.TemperatureOversampling.GetNumBits(), regsTemperature...)
+
+	if err != nil {
+		return float32(math.NaN()), err
+	}
+
+	floatVal := float32(intVal)
+
+	v1 := (floatVal / 16384.0 - 
+
+	return float32(intVal), nil
 }
 
 // ReadPressure read the latest pressure reading from the BMP280. Returns the pressure in Pascals or any i2c errors that occurred
@@ -70,7 +80,39 @@ func (me *BMP) ReadPressure() (float32, error) {
 	return 0.0, nil
 }
 
-func readRaw(registers []byte, numBits int) (uint, error) {
+func (me *BMP) readRawSensorValue(numBits int, registers ...register) (uint, error) {
 
-	return 0, nil
+	if numBits <= 0 {
+		return 0, nil
+	}
+
+	w := make([]byte, len(registers))
+
+	for i, reg := range registers {
+		w[i] = byte(reg)
+	}
+
+	r := make([]byte, len(registers))
+
+	if err := me.device.Bus.Tx(me.device.Addr, w, r); err != nil {
+		return 0, err
+	}
+
+	var num uint = 0
+
+	for i := 0; i < len(r); i++ {
+		if numBits-(i*8) < 8 {
+			num <<= (numBits - (i * 8))
+			num |= uint((0xFF&int(r[i]))>>8 - (numBits - (i * 8)))
+		} else {
+			num <<= 8
+			num |= uint(0xFF & r[i])
+		}
+	}
+
+	if numBits < 20 {
+		num <<= 20 - numBits
+	}
+
+	return num, nil
 }

@@ -13,8 +13,34 @@ const (
 	regTempMSB      register = 0xFA
 	regTempLSB      register = 0xFB
 	regTempXLSB     register = 0xFC
+
+	regCalibrationT1LSB register = 0x88
+	regCalibrationT1MSB register = 0x89
+	regCalibrationT2LSB register = 0x8A
+	regCalibrationT2MSB register = 0x8B
+	regCalibrationT3LSB register = 0x8C
+	regCalibrationT3MSB register = 0x8D
+
+	regCalibrationP1MSG register = 0x8E
 )
 
-var regsPressure = []byte{uint8(regPressMSB), uint8(regPressLSB), uint8(regPressXLSB)}
+var regsPressure = []register{
+	regPressMSB,
+	regPressLSB,
+	regPressXLSB,
+}
 
-var regsTemperature = []byte{uint8(regTempMSB), uint8(regTempLSB), uint8(regTempXLSB)}
+var regsTemperature = []register{
+	regTempMSB,
+	regTempLSB,
+	regTempXLSB,
+}
+
+var regsTempCalibration = []register{
+	regCalibrationT1LSB,
+	regCalibrationT1MSB,
+	regCalibrationT2LSB,
+	regCalibrationT2MSB,
+	regCalibrationT3LSB,
+	regCalibrationT3MSB,
+}

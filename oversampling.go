@@ -22,3 +22,20 @@ const (
 	// OversampleX16 20 bit resolution (0.16 Pa or 0.0003 C)
 	OversampleX16 Oversampling = 0x05
 )
+
+func (me Oversampling) GetNumBits() int {
+
+	switch me {
+	case OversampleX1:
+		return 16
+	case OversampleX2:
+		return 17
+	case OversampleX4:
+		return 18
+	case OversampleX8:
+		return 19
+	case OversampleX16:
+		return 20
+	}
+	return 0
+}
