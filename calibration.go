@@ -1,17 +1,24 @@
 package bmp280
 
-type calibrationData uint16
+type calibrationData float64
 
-func readBytes(b []byte, offset int) calibrationData {
+func (me calibrationData) f() float64 {
+	return float64(me)
+}
 
-	if offset+1 < len(b)-1 {
-		panic("Not enough bytes remaining in slice to parse calibration data")
+func newCalibrationData(b []byte, offset int, unsigned bool) calibrationData {
+
+	if offset+2 > len(b) {
+		panic("Offset and length must fit within size of slice")
 	}
 
-	var d calibrationData = 0
+	if unsigned {
+		var intVal uint16
+		intVal = uint16(b[offset+1])<<8 | uint16(b[offset])&0xFF
+		return calibrationData(intVal)
+	}
 
-	d |= calibrationData(0xFF & b[offset])
-	d <<= 8
-	d |= calibrationData(0xFF & b[offset+1])
-	return d
+	var intVal int16
+	intVal = int16(b[offset+1])<<8 | int16(b[offset])&0xFF
+	return calibrationData(intVal)
 }
